@@ -1,0 +1,39 @@
+<odoo>
+	<data>
+		<!-- Category -->
+		<record id="school_categroy" model="ir.module.category">
+			<field name="name">School Managment</field>
+			<field name="sequence">-10</field>
+		</record>
+
+		<!-- Group -->
+		<record id="teacher_group" model="res.groups">
+			<field name="name">Teacher</field>
+			<field name="category_id" ref="school_categroy"/>
+		</record>
+
+		<record id="register_group" model="res.groups">
+			<field name="name">Register</field>
+			<!-- <field name="implied_ids" eval="[4,ref('teacher_group')]"/> -->
+			<field name="category_id" ref="school_categroy"/>
+		</record>
+
+		<record id="manager_group" model="res.groups">
+			<field name="name">Manager</field>
+			<!-- <field name="implied_ids" eval="[4,ref('register_group')]"/> -->
+			<field name="category_id" ref="school_categroy"/>
+		</record>
+
+		<record id="teacher_see_only_register" model="ir.rule">
+			<field name="name">Teacher See Student</field>
+            <field name="model_id" ref="model_school_student"/>
+            <field name="domain_force">[("student_register",'=',"register")]</field>
+            <field name="groups" eval="[(4,ref('teacher_group'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="perm_write" eval="0"/>
+		</record>
+
+	</data>
+</odoo>
